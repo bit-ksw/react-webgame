@@ -1,4 +1,4 @@
-const React = require('react');
+import React from 'react';
 const { useState, useRef } = React;
 
 const WordRelay = () => {
@@ -40,4 +40,17 @@ const WordRelay = () => {
 
 }
 
-module.exports = WordRelay;
+// export const hello = 'hello'
+// import { hello }
+
+// export const bye = bye'
+// import { bye }
+
+// export default NumberBaseball;
+// import NumberBaseball;
+
+// const React = require('react);
+// export.hello = 'hello'
+// module.exports = NumberBaseball;
+
+export default WordRelay;
