@@ -6,18 +6,37 @@ function getNumbers() {
 }
 
 class NumberBaseball extends Component {
+    //
+    // constructor(props) {
+    //     super(props);
+    //     this.state = {
+    //         result: '',
+    //         value: '',
+    //         answer: getNumbers(),
+    //         tries: [],
+    //     };
+    //
+    //     this.onSubmitForm = this.onSubmitForm.bind(this);
+    //     this.onChangeInput = this.onChangeInput.bind(this);
+    // }
+
     state = {
         result: '',
         value: '',
         answer: getNumbers(),
-        tries: []
+        tries: [],
     };
 
-    onSubmitForm = () => {
+    onSubmitForm = (e) => {
 
     };
 
-    onChangeInput = () => {
+    // 에로우 함수로 안만들경우는 윗처럼 해준다.
+    // onSubmitForm(e) {
+    //
+    // }
+
+    onChangeInput = (e) => {
 
     };
 
@@ -40,13 +59,10 @@ class NumberBaseball extends Component {
                     {
                         this.fruits.map((v, i) => {
                             return (
-                                <Try value={v} index={i} />
+                                <Try key={v.fruit + v.taste} value={v} index={i} />
                             );
                         })
                     }
-
-
-
                 </ul>
             </>
         )
