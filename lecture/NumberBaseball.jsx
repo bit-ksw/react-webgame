@@ -1,50 +1,74 @@
 import React, { Component } from 'react';
 import Try from './Try';
 
-function getNumbers() {
-
+function getNumbers() { // 숫자 네 개를 겹치지 않고 랜덤하게 뽑는 함수
+    const candidate = [1,2,3,4,5,6,7,8,9];
+    const array = [];
+    for (let i = 0; i < 4; i++) {
+        const chosen = candidate.splice(Math.floor(Math.random() * (9 - i)), 1)[0];
+        array.push(chosen);
+    }
+    return array;
 }
 
 class NumberBaseball extends Component {
-    //
-    // constructor(props) {
-    //     super(props);
-    //     this.state = {
-    //         result: '',
-    //         value: '',
-    //         answer: getNumbers(),
-    //         tries: [],
-    //     };
-    //
-    //     this.onSubmitForm = this.onSubmitForm.bind(this);
-    //     this.onChangeInput = this.onChangeInput.bind(this);
-    // }
 
     state = {
         result: '',
         value: '',
-        answer: getNumbers(),
+        answer: getNumbers(), // ex:[1,3,5,7]
         tries: [],
     };
 
     onSubmitForm = (e) => {
-
+        e.preventDefault();
+        if (this.state.value === this.state.answer.join('')) {
+            this.setState({
+                result: '홈런!',
+                tries: [...this.state.tries, { try: this.state.value, result: '홈런!' }],
+            })
+            alert('게임을 다시 시작합니다.');
+            this.setState({
+                value: '',
+                answer: getNumbers(),
+                tries: [],
+            });
+        } else { // 답 틀렸으
+            const answerArray = this.state.value.split('').map((v) => parseInt(v));
+            let strike = 0;
+            let ball = 0;
+            if (this.state.tries.length >= 9) { // 10번 이상 틀렸을
+                this.setState({
+                    result: `10번 넘게 틀려서 실패! 답은 ${this.state.answer.join(',')}있습니다.`,
+                });
+                alert('게임을 다시 시작합니다.');
+                this.setState({
+                    value: '',
+                    answer: getNumbers(),
+                    tries: [],
+                });
+            } else {
+                for (let i = 0; i < 4; i++) {
+                    if (answerArray[i] === this.state.answer[i]) {
+                        strike += 1;
+                    } else if (this.state.answer.includes(answerArray[i])) {
+                        ball += 1;
+                    }
+                }
+                this.setState({
+                    tries: [...this.state.tries, {try: this.state.value, result: `${strike} 스트라이크, ${ball} 볼입니다`}],
+                    value: '',
+                });
+            }
+        }
     };
-
-    // 에로우 함수로 안만들경우는 윗처럼 해준다.
-    // onSubmitForm(e) {
-    //
-    // }
 
     onChangeInput = (e) => {
-
+        console.log(this.state.answer);
+        this.setState({
+            value: e.target.value,
+        })
     };
-
-    fruits = [
-        { fruit: '사과',taste: '맛있다'},
-        { fruit: '바나나', taste: '맛없다'},
-        { fruit: '귤', taste: '시다'},
-    ];
 
     render() {
         return (
@@ -57,9 +81,9 @@ class NumberBaseball extends Component {
                 <div>시도{this.state.tries.length}</div>
                 <ul>
                     {
-                        this.fruits.map((v, i) => {
+                        this.state.tries.map((v, i) => {
                             return (
-                                <Try key={v.fruit + v.taste} value={v} index={i} />
+                                <Try key={`${i + 1}차 시도 :`} tryInfo={v} />
                             );
                         })
                     }
