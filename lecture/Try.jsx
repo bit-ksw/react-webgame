@@ -1,6 +1,18 @@
-import React from 'react';
+import React, { PureComponent, memo } from 'react';
 
-const Try = ({ tryInfo }) => {
+// class Try extends  PureComponent {
+//     render() {
+//         const { tryInfo } = this.props;
+//         return (
+//             <li>
+//                 <div>{tryInfo.try}</div>
+//                 <div>{tryInfo.result}</div>
+//             </li>
+//         );
+//     }
+// }
+
+const Try = memo(({ tryInfo }) => {
     return (
         <li>
             <div>{tryInfo.try}</div>
@@ -8,7 +20,7 @@ const Try = ({ tryInfo }) => {
         </li>
     )
 
-}
+});
 
 // 구조분해가 아닐경우
 // const Try = (props) => {
