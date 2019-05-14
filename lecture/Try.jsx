@@ -1,26 +1,47 @@
-import React, { PureComponent, memo } from 'react';
+import React, { PureComponent, memo, useState } from 'react';
 
-// class Try extends  PureComponent {
-//     render() {
-//         const { tryInfo } = this.props;
-//         return (
-//             <li>
-//                 <div>{tryInfo.try}</div>
-//                 <div>{tryInfo.result}</div>
-//             </li>
-//         );
-//     }
-// }
+class Try extends  PureComponent {
+    constructor(props) {
+        super(props);
 
-const Try = memo(({ tryInfo }) => {
-    return (
-        <li>
-            <div>{tryInfo.try}</div>
-            <div>{tryInfo.result}</div>
-        </li>
-    )
+        //다른동작
+        const filtered = this.props.filter(() => {
 
-});
+        });
+
+        this.state = {
+            result: this.props.result,
+            try: this.props.try,
+        };
+    }
+
+
+    render() {
+        const { tryInfo } = this.props;
+        return (
+            <li>
+                <div>{tryInfo.try}</div>
+                <div>{tryInfo.result}</div>
+            </li>
+        );
+    }
+}
+
+// const Try = memo(({ tryInfo }) => {
+//     const [result, setResult ] = useState(tryInfo.result);
+//
+//     const onClick = () => {
+//         setResult('1');
+//     };
+//
+//     return (
+//         <li>
+//             <div>{tryInfo.try}</div>
+//             <div onClick={onClick}>{tryInfo.result}</div>
+//         </li>
+//     )
+//
+// });
 
 // 구조분해가 아닐경우
 // const Try = (props) => {
